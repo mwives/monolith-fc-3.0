@@ -1,5 +1,6 @@
 import { Product } from '@product-adm/domain/product.entity'
 import { ProductGateway } from '@product-adm/gateway/product.gateway'
+import { Id } from '@shared/domain/value-object/id.value-object'
 import { ProductModel } from './product.model'
 
 export class ProductRepository implements ProductGateway {
@@ -16,6 +17,20 @@ export class ProductRepository implements ProductGateway {
   }
 
   async findById(id: string): Promise<Product> {
-    throw new Error('Method not implemented.')
+    const product = await ProductModel.findByPk(id)
+
+    if (!product) {
+      throw new Error('Product not found')
+    }
+
+    return new Product({
+      id: new Id(product.id),
+      name: product.name,
+      description: product.description,
+      purchasePrice: product.purchasePrice,
+      stock: product.stock,
+      createdAt: product.createdAt,
+      updatedAt: product.updatedAt,
+    })
   }
 }

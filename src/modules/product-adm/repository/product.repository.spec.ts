@@ -8,6 +8,16 @@ import { Id } from '@shared/domain/value-object/id.value-object'
 describe('ProductRepository', () => {
   let sequelize: Sequelize
 
+  const productProps = {
+    id: new Id('1'),
+    name: 'any_name',
+    description: 'any_description',
+    purchasePrice: 100,
+    stock: 10,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  }
+
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
@@ -26,15 +36,8 @@ describe('ProductRepository', () => {
 
   describe('add', () => {
     it('should create a product', async () => {
-      const productProps = {
-        id: new Id('1'),
-        name: 'any_name',
-        description: 'any_description',
-        purchasePrice: 100,
-        stock: 10,
-      }
-
-      const product = new Product(productProps)
+      let { createdAt, updatedAt, ...props } = productProps
+      const product = new Product(props)
       const productRepository = new ProductRepository()
 
       await productRepository.add(product)
@@ -51,6 +54,25 @@ describe('ProductRepository', () => {
         stock: productProps.stock,
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
+      })
+    })
+  })
+
+  describe('findById', () => {
+    it('should find a product by id', async () => {
+      await ProductModel.create({ ...productProps, id: productProps.id.value })
+
+      const productRepository = new ProductRepository()
+      const productFound = await productRepository.findById(
+        productProps.id.value
+      )
+
+      expect(productFound).toMatchObject({
+        id: productProps.id,
+        name: productProps.name,
+        description: productProps.description,
+        purchasePrice: productProps.purchasePrice,
+        stock: productProps.stock,
       })
     })
   })
