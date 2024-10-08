@@ -12,7 +12,8 @@
     "strictNullChecks": false,
     "skipLibCheck": true,
     "paths": {
-      "@shared/*": ["./src/modules/@shared/*"]
+      "@shared/*": ["./src/modules/@shared/*"],
+      "@product-adm/*": ["./src/modules/product-adm/*"]
     }
   },
   "include": ["src/**/*.ts"]
