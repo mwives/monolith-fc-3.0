@@ -7,7 +7,7 @@ import {
 import { UseCaseInterface } from '@shared/usecase/usecase.interface'
 
 export interface UseCasesProps {
-  addUseCase: UseCaseInterface
+  addProductUseCase: UseCaseInterface
   checkStockUseCase: UseCaseInterface
 }
 
@@ -16,7 +16,7 @@ export class ProductAdmFacade implements IProductAdmFacade {
   private checkStockUseCase: UseCaseInterface
 
   constructor(useCasesProps: UseCasesProps) {
-    this.addUseCase = useCasesProps.addUseCase
+    this.addUseCase = useCasesProps.addProductUseCase
     this.checkStockUseCase = useCasesProps.checkStockUseCase
   }
 
