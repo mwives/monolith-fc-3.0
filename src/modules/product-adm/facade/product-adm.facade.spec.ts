@@ -6,6 +6,15 @@ import { InputAddProductFacadeDto } from './product-adm.facade.interface'
 
 describe('ProductAdmFacade', () => {
   let sequelize: Sequelize
+  const productFacade = ProductAdmFacadeFactory.create()
+
+  const productProps = {
+    id: '1',
+    name: 'any_name',
+    description: 'any_description',
+    purchasePrice: 100,
+    stock: 10,
+  }
 
   beforeEach(async () => {
     sequelize = new Sequelize({
@@ -24,17 +33,9 @@ describe('ProductAdmFacade', () => {
   })
 
   describe('addProduct', () => {
-    const input: InputAddProductFacadeDto = {
-      id: '1',
-      name: 'any_name',
-      description: 'any_description',
-      purchasePrice: 100,
-      stock: 10,
-    }
+    const input: InputAddProductFacadeDto = productProps
 
     it('should add a product', async () => {
-      const productFacade = ProductAdmFacadeFactory.create()
-
       await productFacade.addProduct(input)
 
       const productCreated = await ProductModel.findByPk(input.id)
@@ -47,6 +48,25 @@ describe('ProductAdmFacade', () => {
         stock: input.stock,
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
+      })
+    })
+  })
+
+  describe('checkStock', () => {
+    it('should check stock', async () => {
+      await ProductModel.create({
+        ...productProps,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      })
+
+      const stockResult = await productFacade.checkStock({
+        productId: productProps.id,
+      })
+
+      expect(stockResult).toMatchObject({
+        productId: productProps.id,
+        stock: productProps.stock,
       })
     })
   })
