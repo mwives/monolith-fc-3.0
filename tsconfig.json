@@ -13,7 +13,8 @@
     "skipLibCheck": true,
     "paths": {
       "@shared/*": ["./src/modules/@shared/*"],
-      "@product-adm/*": ["./src/modules/product-adm/*"]
+      "@product-adm/*": ["./src/modules/product-adm/*"],
+      "@store-catalog/*": ["./src/modules/store-catalog/*"]
     }
   },
   "include": ["src/**/*.ts"]
