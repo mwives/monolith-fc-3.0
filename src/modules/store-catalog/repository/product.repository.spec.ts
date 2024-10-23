@@ -49,4 +49,23 @@ describe('ProductRepository', () => {
       })
     })
   })
+
+  describe('findById', () => {
+    it('should return a product by id', async () => {
+      const product = await ProductModel.create({
+        ...productProps,
+        id: new Id().value,
+      })
+
+      const productRepository = new ProductRepository()
+
+      const productFound = await productRepository.findById(product.id)
+
+      expect(productFound).not.toBeNull()
+      expect(productFound).toMatchObject({
+        id: expect.any(Id),
+        ...productProps,
+      })
+    })
+  })
 })
