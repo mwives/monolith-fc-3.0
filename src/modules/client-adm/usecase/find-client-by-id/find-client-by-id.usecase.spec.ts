@@ -1,7 +1,7 @@
 import { Client } from '@client-adm/domain/client.entity'
-import { FindClientUsecase } from '@client-adm/usecase/find-client/find-client.usecase'
+import { FindClientByIdUsecase } from './find-client-by-id.usecase'
 
-describe('FindClientUsecase', () => {
+describe('FindClientByIdUsecase', () => {
   const client = new Client({
     name: 'any_name',
     email: 'any_email',
@@ -15,7 +15,7 @@ describe('FindClientUsecase', () => {
 
   describe('execute', () => {
     it('should return a client', async () => {
-      const usecase = new FindClientUsecase(clientRepository)
+      const usecase = new FindClientByIdUsecase(clientRepository)
       const response = await usecase.execute({ id: 'any_id' })
 
       expect(response).toEqual({

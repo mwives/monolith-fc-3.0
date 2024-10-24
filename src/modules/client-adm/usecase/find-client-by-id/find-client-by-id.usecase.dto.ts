@@ -1,8 +1,8 @@
-export type InputFindClientDto = {
+export type InputFindClientByIdDto = {
   id: string
 }
 
-export type OutputFindClientDto = {
+export type OutputFindClientByIdDto = {
   id: string
   name: string
   email: string

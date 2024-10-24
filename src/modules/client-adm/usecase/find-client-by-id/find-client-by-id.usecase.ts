@@ -1,14 +1,16 @@
 import { ClientGateway } from '@client-adm/gateway/client.gateway'
-import {
-  InputFindClientDto,
-  OutputFindClientDto,
-} from '@client-adm/usecase/find-client/find-client.usecase.dto'
 import { UseCaseInterface } from '@shared/usecase/usecase.interface'
+import {
+  InputFindClientByIdDto,
+  OutputFindClientByIdDto,
+} from './find-client-by-id.usecase.dto'
 
-export class FindClientUsecase implements UseCaseInterface {
+export class FindClientByIdUsecase implements UseCaseInterface {
   constructor(private clientRepository: ClientGateway) {}
 
-  async execute(input?: InputFindClientDto): Promise<OutputFindClientDto> {
+  async execute(
+    input?: InputFindClientByIdDto
+  ): Promise<OutputFindClientByIdDto> {
     const client = await this.clientRepository.findById(input.id)
 
     return {
