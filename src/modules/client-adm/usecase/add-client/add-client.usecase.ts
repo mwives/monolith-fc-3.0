@@ -13,6 +13,7 @@ export class AddClientUseCase implements UseCaseInterface {
 
   async execute(input: InputAddClientDto): Promise<OutputAddClientDto> {
     const props = {
+      id: input.id ? new Id(input.id) : new Id(),
       name: input.name,
       email: input.email,
       address: input.address,
