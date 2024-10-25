@@ -12,6 +12,7 @@ export default {
   moduleNameMapper: {
     '^@shared/(.*)$': '<rootDir>/src/modules/@shared/$1',
     '^@client-adm/(.*)$': '<rootDir>/src/modules/client-adm/$1',
+    '^@payment/(.*)$': '<rootDir>/src/modules/payment/$1',
     '^@product-adm/(.*)$': '<rootDir>/src/modules/product-adm/$1',
     '^@store-catalog/(.*)$': '<rootDir>/src/modules/store-catalog/$1',
   },

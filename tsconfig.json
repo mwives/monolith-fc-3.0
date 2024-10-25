@@ -14,6 +14,7 @@
     "paths": {
       "@shared/*": ["./src/modules/@shared/*"],
       "@client-adm/*": ["./src/modules/client-adm/*"],
+      "@payment/*": ["./src/modules/payment/*"],
       "@product-adm/*": ["./src/modules/product-adm/*"],
       "@store-catalog/*": ["./src/modules/store-catalog/*"]
     }
