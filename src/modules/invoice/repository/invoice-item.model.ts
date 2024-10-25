@@ -29,5 +29,5 @@ export class InvoiceItemModel extends Model {
   declare price: number
 
   @BelongsTo(() => InvoiceModel)
-  declare invoice: InvoiceModel
+  declare invoice: ReturnType<() => InvoiceModel>
 }
