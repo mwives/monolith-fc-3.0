@@ -51,7 +51,16 @@ describe('InvoiceRepository', () => {
 
   describe('findById', () => {
     it('should find an invoice by id', async () => {
-      expect(true).toBe(true)
+      const createdInvoice = await invoiceRepository.create(invoice)
+      const foundInvoice = await invoiceRepository.findById(
+        createdInvoice.id.value
+      )
+
+      expect(foundInvoice).toMatchObject({
+        ...invoice,
+        _createdAt: expect.any(Date),
+        _updatedAt: expect.any(Date),
+      })
     })
   })
 
