@@ -19,6 +19,7 @@ describe('FindInvoiceByIdUsecase', () => {
     }),
     items: [
       new InvoiceItem({
+        invoiceId: new Id('any_id'),
         name: 'any_name',
         price: 100,
       }),

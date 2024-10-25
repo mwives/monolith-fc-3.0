@@ -2,6 +2,7 @@ import { Invoice } from '@invoice/domain/entity/invoice'
 import { InvoiceItem } from '@invoice/domain/entity/invoice-item'
 import { Address } from '@invoice/domain/value-object/address'
 import { InvoiceGateway } from '@invoice/gateway/invoice.gateway'
+import { Id } from '@shared/domain/value-object/id.value-object'
 import { UseCaseInterface } from '@shared/usecase/usecase.interface'
 import {
   InputGenerateInvoiceUseCaseDto,
@@ -25,6 +26,7 @@ export class GenerateInvoiceUsecase implements UseCaseInterface {
     const items = input.items.map(
       (item) =>
         new InvoiceItem({
+          invoiceId: new Id(),
           name: item.name,
           price: item.price,
         })

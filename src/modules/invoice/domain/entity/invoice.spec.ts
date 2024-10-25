@@ -17,10 +17,12 @@ describe('Invoice', () => {
     }),
     items: [
       new InvoiceItem({
+        invoiceId: new Id('any_id'),
         name: 'any_name',
         price: 10,
       }),
       new InvoiceItem({
+        invoiceId: new Id('any_id'),
         name: 'any_name',
         price: 20,
       }),
