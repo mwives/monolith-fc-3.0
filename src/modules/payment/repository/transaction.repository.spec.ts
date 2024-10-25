@@ -8,13 +8,6 @@ import { TransactionRepository } from './transaction.repository'
 describe('TransactionRepository', () => {
   let sequelize: Sequelize
 
-  const clientProps = {
-    id: new Id('1'),
-    name: 'any_name',
-    email: 'any_email',
-    address: 'any_address',
-  }
-
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',

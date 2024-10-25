@@ -14,6 +14,7 @@ describe('PaymentFacade', () => {
     createdAt: new Date(),
     updatedAt: new Date(),
   }
+
   beforeEach(async () => {
     sequelize = new Sequelize({
       dialect: 'sqlite',
