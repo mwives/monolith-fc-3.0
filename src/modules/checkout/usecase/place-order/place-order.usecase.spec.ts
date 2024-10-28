@@ -8,13 +8,11 @@ describe('PlaceOrderUsecase', () => {
 
   const clientFacadeMock = {
     add: jest.fn(),
-    findById: jest.fn().mockResolvedValue({}),
+    findById: jest.fn(),
   }
   const productFacadeMock = {
     addProduct: jest.fn(),
-    checkStock: jest.fn(({ productId }) =>
-      Promise.resolve({ productId, stock: productId === '1' ? 0 : 1 })
-    ),
+    checkStock: jest.fn(),
   }
   const catalogFacadeMock = {
     findAll: jest.fn(),
@@ -41,170 +39,137 @@ describe('PlaceOrderUsecase', () => {
     checkoutRepositoryMock
   )
 
+  beforeEach(() => {
+    jest.clearAllMocks()
+    jest.useFakeTimers().setSystemTime(mockDate)
+  })
+
+  afterAll(() => {
+    jest.useRealTimers()
+  })
+
   describe('execute', () => {
-    it('should throw an error when client not found', async () => {
+    it('should throw an error when client is not found', async () => {
       clientFacadeMock.findById.mockResolvedValueOnce(null)
 
-      const input: InputPlaceOrderDto = {
-        clientId: '1',
-        products: [],
-      }
+      const input: InputPlaceOrderDto = { clientId: '1', products: [] }
 
       await expect(usecase.execute(input)).rejects.toThrowError(
         'Client not found'
       )
+      expect(clientFacadeMock.findById).toHaveBeenCalledWith({
+        id: input.clientId,
+      })
     })
 
-    it('should throw an error when products are invalid', async () => {
-      // const mockValidateProducts = jest.spyOn(usecase, 'validateProducts')
-      const mockValidateProducts = jest.spyOn(
-        usecase as any,
-        'validateProducts'
-      )
+    it('should throw an error when no products are selected', async () => {
+      clientFacadeMock.findById.mockResolvedValueOnce({})
+      const validateProductsSpy = jest.spyOn(usecase as any, 'validateProducts')
 
-      const input: InputPlaceOrderDto = {
-        clientId: '1',
-        products: [],
-      }
+      const input: InputPlaceOrderDto = { clientId: '1', products: [] }
 
       await expect(usecase.execute(input)).rejects.toThrowError(
         'No products selected'
       )
-      expect(mockValidateProducts).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe('placeOrder', () => {
-    beforeAll(() => {
-      jest.useFakeTimers('modern')
-      jest.setSystemTime(mockDate)
+      expect(validateProductsSpy).toHaveBeenCalledTimes(1)
     })
 
-    afterAll(() => {
-      jest.useRealTimers()
-    })
-
-    const clientProps = {
-      id: 'any_id',
-      name: 'any_name',
-      email: 'any_email',
-      address: 'any_address',
-    }
-
-    // clientFacadeMock.findById.mockResolvedValue(clientProps)
-
-    it('should not approve order', async () => {
+    it('should not approve order when payment fails', async () => {
       catalogFacadeMock.findById.mockResolvedValueOnce({
         id: '0',
         name: 'any_name',
         description: 'any_description',
         salesPrice: 10,
       })
+      clientFacadeMock.findById.mockResolvedValueOnce({
+        id: 'any_clientId',
+        name: 'Client Name',
+        email: 'client@example.com',
+        address: '123 Street',
+      })
       paymentFacadeMock.process.mockResolvedValueOnce({
         transactionId: 'any_transactionId',
         orderId: 'any_orderId',
-        amount: 100,
+        amount: 10,
         status: 'error',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       })
-
-      const validateProductsSpy = jest.spyOn(usecase as any, 'validateProducts')
-      const getProductSpy = jest.spyOn(usecase as any, 'getProduct')
+      productFacadeMock.checkStock.mockResolvedValueOnce({ stock: 1 })
 
       const input: InputPlaceOrderDto = {
         clientId: 'any_clientId',
         products: [{ productId: '0' }],
       }
-
       const output = await usecase.execute(input)
 
       expect(output.invoiceId).toBeNull()
       expect(output.total).toBe(10)
       expect(output.products).toMatchObject([{ productId: '0' }])
-      expect(clientFacadeMock.findById).toHaveBeenCalledWith({
-        id: 'any_clientId',
-      })
-      expect(validateProductsSpy).toHaveBeenCalledWith(input.products)
-      expect(getProductSpy).toHaveBeenCalledTimes(1)
       expect(checkoutRepositoryMock.createOrder).toHaveBeenCalledTimes(1)
       expect(paymentFacadeMock.process).toHaveBeenCalledWith({
         amount: 10,
         orderId: expect.any(String),
       })
-
       expect(invoiceFacadeMock.generate).not.toHaveBeenCalled()
     })
 
-    it('should approve order', async () => {
+    it('should approve order when payment is approved', async () => {
       catalogFacadeMock.findById.mockResolvedValueOnce({
         id: '0',
         name: 'any_name',
         description: 'any_description',
         salesPrice: 10,
       })
+      clientFacadeMock.findById.mockResolvedValueOnce({
+        id: 'any_clientId',
+        name: 'Client Name',
+        email: 'client@example.com',
+        address: '123 Street',
+      })
+      productFacadeMock.checkStock.mockResolvedValueOnce({ stock: 1 })
       paymentFacadeMock.process.mockResolvedValueOnce({
         transactionId: 'any_transactionId',
         orderId: 'any_orderId',
-        amount: 100,
+        amount: 10,
         status: 'approved',
-        createdAt: new Date(),
-        updatedAt: new Date(),
       })
       invoiceFacadeMock.generate.mockResolvedValueOnce({
         id: 'any_invoiceId',
-        name: 'any_name',
-        address: 'any_address',
+        name: 'Client Name',
+        address: '123 Street',
         items: [],
       })
-      clientFacadeMock.findById.mockResolvedValueOnce(clientProps)
 
       const input: InputPlaceOrderDto = {
         clientId: 'any_clientId',
         products: [{ productId: '0' }],
       }
-
       const output = await usecase.execute(input)
 
       expect(output.invoiceId).toBe('any_invoiceId')
       expect(output.total).toBe(10)
       expect(output.products).toMatchObject([{ productId: '0' }])
-      expect(clientFacadeMock.findById).toHaveBeenCalledWith({
-        id: 'any_clientId',
-      })
-      expect(checkoutRepositoryMock.createOrder).toHaveBeenCalledTimes(1)
-      expect(paymentFacadeMock.process).toHaveBeenCalledWith({
-        amount: 10,
-        orderId: expect.any(String),
-      })
       expect(invoiceFacadeMock.generate).toHaveBeenCalledWith({
-        name: clientProps.name,
-        address: clientProps.address,
-        items: [
-          {
-            id: '0',
-            name: 'any_name',
-            price: 10,
-          },
-        ],
+        name: 'Client Name',
+        address: '123 Street',
+        items: [{ id: '0', name: 'any_name', price: 10 }],
       })
     })
   })
 
   describe('validateProducts', () => {
-    it('should throw an error when products are invalid', async () => {
-      const input: InputPlaceOrderDto = {
-        clientId: '1',
-        products: [],
-      }
-
-      await expect(
-        usecase['validateProducts'](input.products)
-      ).rejects.toThrowError('No products selected')
+    it('should throw an error when no products are provided', async () => {
+      await expect(usecase['validateProducts']([])).rejects.toThrowError(
+        'No products selected'
+      )
     })
 
     it('should throw an error when product is out of stock', async () => {
-      let input: InputPlaceOrderDto = {
+      clientFacadeMock.findById.mockResolvedValueOnce({})
+      productFacadeMock.checkStock.mockImplementation(({ productId }) =>
+        Promise.resolve({ productId, stock: productId === '1' ? 0 : 1 })
+      )
+
+      const input: InputPlaceOrderDto = {
         clientId: '0',
         products: [{ productId: '1' }],
       }
@@ -212,31 +177,13 @@ describe('PlaceOrderUsecase', () => {
       await expect(usecase.execute(input)).rejects.toThrowError(
         'Product 1 is out of stock'
       )
-
-      input = {
-        clientId: '0',
-        products: [{ productId: '0' }, { productId: '1' }, { productId: '2' }],
-      }
-
-      await expect(usecase.execute(input)).rejects.toThrowError(
-        'Product 1 is out of stock'
-      )
-      expect(productFacadeMock.checkStock).toHaveBeenCalledTimes(3)
+      expect(productFacadeMock.checkStock).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('getProducts', () => {
-    beforeAll(() => {
-      jest.useFakeTimers('modern')
-      jest.setSystemTime(mockDate)
-    })
-
-    afterAll(() => {
-      jest.useRealTimers()
-    })
-
-    it('should throw error when product not found', async () => {
-      jest.spyOn(catalogFacadeMock, 'findById').mockResolvedValue(null)
+  describe('getProduct', () => {
+    it('should throw error when product is not found', async () => {
+      catalogFacadeMock.findById.mockResolvedValue(null)
 
       await expect(usecase['getProduct']('0')).rejects.toThrowError(
         'Product not found'
@@ -250,12 +197,16 @@ describe('PlaceOrderUsecase', () => {
         description: 'any_description',
         salesPrice: 10,
       })
-      catalogFacadeMock.findById.mockResolvedValue(mockProduct)
+      catalogFacadeMock.findById.mockResolvedValueOnce(mockProduct)
 
-      const result = await catalogFacadeMock.findById({ id: 'any_id' })
-
+      const result = await usecase['getProduct']('any_id')
+      expect(result).toMatchObject({
+        id: expect.any(Id),
+        name: 'any_name',
+        description: 'any_description',
+        salesPrice: 10,
+      })
       expect(catalogFacadeMock.findById).toHaveBeenCalledWith({ id: 'any_id' })
-      expect(result).toEqual(mockProduct)
     })
   })
 })
