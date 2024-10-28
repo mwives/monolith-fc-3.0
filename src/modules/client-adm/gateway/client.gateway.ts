@@ -1,4 +1,4 @@
-import { Client } from '@client-adm/domain/client.entity'
+import { Client } from '@client-adm/domain/entity/client.entity'
 
 export interface ClientGateway {
   add(client: Client): Promise<void>

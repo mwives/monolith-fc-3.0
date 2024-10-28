@@ -10,14 +10,13 @@ describe('InvoiceFacade', () => {
 
   const input = {
     name: 'any_name',
-    address: 'any_address',
-    // document: 'any_document',
-    // city: 'any_city',
-    // complement: 'any_complement',
-    // number: 'any_number',
-    // state: 'any_state',
-    // street: 'any_street',
-    // zipCode: 'any_zipCode',
+    document: 'any_document',
+    city: 'any_city',
+    complement: 'any_complement',
+    number: 'any_number',
+    state: 'any_state',
+    street: 'any_street',
+    zipCode: 'any_zipCode',
     items: [
       {
         id: 'any_id',
@@ -50,14 +49,13 @@ describe('InvoiceFacade', () => {
       expect(invoice).toMatchObject({
         id: expect.any(String),
         name: input.name,
-        address: input.address,
-        // document: input.document,
-        // street: input.street,
-        // number: input.number,
-        // complement: input.complement,
-        // city: input.city,
-        // state: input.state,
-        // zipCode: input.zipCode,
+        document: input.document,
+        street: input.street,
+        number: input.number,
+        complement: input.complement,
+        city: input.city,
+        state: input.state,
+        zipCode: input.zipCode,
         items: expect.arrayContaining([
           {
             id: expect.any(String),

@@ -17,7 +17,15 @@ export class FindClientByIdUsecase implements UseCaseInterface {
       id: client.id.value,
       name: client.name,
       email: client.email,
-      address: client.address,
+      document: client.document,
+      address: {
+        city: client.address.city,
+        state: client.address.state,
+        street: client.address.street,
+        complement: client.address.complement,
+        number: client.address.number,
+        zipCode: client.address.zipCode,
+      },
       createdAt: client.createdAt,
       updatedAt: client.updatedAt,
     }

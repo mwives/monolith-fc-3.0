@@ -16,7 +16,15 @@ describe('AddClientUsecase', () => {
       const input: InputAddClientDto = {
         name: 'any_name',
         email: 'any_email',
-        address: 'any_address',
+        document: 'any_document',
+        address: {
+          city: 'any_city',
+          complement: 'any_complement',
+          number: 'any_number',
+          state: 'any_state',
+          street: 'any_street',
+          zipCode: 'any_zipCode',
+        },
       }
 
       const result = await useCase.execute(input)
@@ -26,7 +34,14 @@ describe('AddClientUsecase', () => {
         id: expect.any(String),
         name: 'any_name',
         email: 'any_email',
-        address: 'any_address',
+        address: {
+          city: 'any_city',
+          complement: 'any_complement',
+          number: 'any_number',
+          state: 'any_state',
+          street: 'any_street',
+          zipCode: 'any_zipCode',
+        },
       })
     })
   })

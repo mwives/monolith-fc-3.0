@@ -83,9 +83,9 @@ describe('PlaceOrderUsecase', () => {
       })
       clientFacadeMock.findById.mockResolvedValueOnce({
         id: 'any_clientId',
-        name: 'Client Name',
+        name: 'any_name',
         email: 'client@example.com',
-        address: '123 Street',
+        address: 'any_address',
       })
       paymentFacadeMock.process.mockResolvedValueOnce({
         transactionId: 'any_transactionId',
@@ -121,9 +121,17 @@ describe('PlaceOrderUsecase', () => {
       })
       clientFacadeMock.findById.mockResolvedValueOnce({
         id: 'any_clientId',
-        name: 'Client Name',
-        email: 'client@example.com',
-        address: '123 Street',
+        name: 'any_name',
+        email: 'any_email',
+        document: 'any_document',
+        address: {
+          city: 'any_city',
+          state: 'any_state',
+          street: 'any_street',
+          number: 'any_number',
+          zipCode: 'any_zip',
+          complement: 'any_complement',
+        },
       })
       productFacadeMock.checkStock.mockResolvedValueOnce({ stock: 1 })
       paymentFacadeMock.process.mockResolvedValueOnce({
@@ -134,8 +142,8 @@ describe('PlaceOrderUsecase', () => {
       })
       invoiceFacadeMock.generate.mockResolvedValueOnce({
         id: 'any_invoiceId',
-        name: 'Client Name',
-        address: '123 Street',
+        name: 'any_name',
+        address: 'any_address',
         items: [],
       })
 
@@ -149,8 +157,14 @@ describe('PlaceOrderUsecase', () => {
       expect(output.total).toBe(10)
       expect(output.products).toMatchObject([{ productId: '0' }])
       expect(invoiceFacadeMock.generate).toHaveBeenCalledWith({
-        name: 'Client Name',
-        address: '123 Street',
+        name: 'any_name',
+        document: 'any_document',
+        city: 'any_city',
+        state: 'any_state',
+        street: 'any_street',
+        number: 'any_number',
+        zipCode: 'any_zip',
+        complement: 'any_complement',
         items: [{ id: '0', name: 'any_name', price: 10 }],
       })
     })

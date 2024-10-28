@@ -15,14 +15,14 @@ export class GenerateInvoiceUsecase implements UseCaseInterface {
   async execute(
     input: InputGenerateInvoiceUseCaseDto
   ): Promise<OutputGenerateInvoiceUseCaseDto> {
-    // const address = new Address({
-    //   street: input.street,
-    //   number: input.number,
-    //   complement: input.complement,
-    //   city: input.city,
-    //   state: input.state,
-    //   zipCode: input.zipCode,
-    // })
+    const address = new Address({
+      street: input.street,
+      number: input.number,
+      complement: input.complement,
+      city: input.city,
+      state: input.state,
+      zipCode: input.zipCode,
+    })
     const items = input.items.map(
       (item) =>
         new InvoiceItem({
@@ -33,23 +33,23 @@ export class GenerateInvoiceUsecase implements UseCaseInterface {
     )
     const invoice = new Invoice({
       name: input.name,
-      address: input.address,
+      document: input.document,
+      address,
       items,
     })
 
-    const createdInvoice = await this.invoiceRepository.create(invoice)
+    await this.invoiceRepository.create(invoice)
 
     return {
       id: invoice.id.value,
       name: invoice.name,
-      address: invoice.address,
-      // document: invoice.document,
-      // street: invoice.address.street,
-      // number: invoice.address.number,
-      // complement: invoice.address.complement,
-      // city: invoice.address.city,
-      // state: invoice.address.state,
-      // zipCode: invoice.address.zipCode,
+      document: invoice.document,
+      street: invoice.address.street,
+      number: invoice.address.number,
+      complement: invoice.address.complement,
+      city: invoice.address.city,
+      state: invoice.address.state,
+      zipCode: invoice.address.zipCode,
       items: invoice.items.map((item) => ({
         id: item.id.value,
         name: item.name,

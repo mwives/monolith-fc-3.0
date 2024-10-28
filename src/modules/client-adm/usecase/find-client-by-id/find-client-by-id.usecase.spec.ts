@@ -1,11 +1,20 @@
-import { Client } from '@client-adm/domain/client.entity'
+import { Client } from '@client-adm/domain/entity/client.entity'
+import { Address } from '@client-adm/domain/value-object/address'
 import { FindClientByIdUsecase } from './find-client-by-id.usecase'
 
 describe('FindClientByIdUsecase', () => {
   const client = new Client({
     name: 'any_name',
     email: 'any_email',
-    address: 'any_address',
+    document: 'any_document',
+    address: new Address({
+      city: 'any_city',
+      complement: 'any_complement',
+      number: 'any_number',
+      state: 'any_state',
+      street: 'any_street',
+      zipCode: 'any_zipCode',
+    }),
   })
 
   const clientRepository = {
@@ -22,7 +31,15 @@ describe('FindClientByIdUsecase', () => {
         id: expect.any(String),
         name: 'any_name',
         email: 'any_email',
-        address: 'any_address',
+        document: 'any_document',
+        address: {
+          city: 'any_city',
+          complement: 'any_complement',
+          number: 'any_number',
+          state: 'any_state',
+          street: 'any_street',
+          zipCode: 'any_zipCode',
+        },
         createdAt: client.createdAt,
         updatedAt: client.updatedAt,
       })

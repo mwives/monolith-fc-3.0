@@ -11,7 +11,13 @@ describe('ClientAdmFacade', () => {
     id: 'any_id',
     name: 'any_name',
     email: 'any_email',
-    address: 'any_address',
+    document: 'any_document',
+    city: 'any_city',
+    state: 'any_state',
+    street: 'any_street',
+    complement: 'any_complement',
+    number: 'any_number',
+    zipCode: 'any_zipCode',
     createdAt: new Date(),
     updatedAt: new Date(),
   }
@@ -38,7 +44,15 @@ describe('ClientAdmFacade', () => {
         id: clientProps.id,
         name: clientProps.name,
         email: clientProps.email,
-        address: clientProps.address,
+        document: clientProps.document,
+        address: {
+          city: clientProps.city,
+          state: clientProps.state,
+          street: clientProps.street,
+          complement: clientProps.complement,
+          number: clientProps.number,
+          zipCode: clientProps.zipCode,
+        },
       })
 
       const client = await ClientModel.findOne({
@@ -49,7 +63,12 @@ describe('ClientAdmFacade', () => {
         id: clientProps.id,
         name: clientProps.name,
         email: clientProps.email,
-        address: clientProps.address,
+        city: clientProps.city,
+        state: clientProps.state,
+        street: clientProps.street,
+        complement: clientProps.complement,
+        number: clientProps.number,
+        zipCode: clientProps.zipCode,
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
       })
@@ -66,7 +85,15 @@ describe('ClientAdmFacade', () => {
         id: clientProps.id,
         name: clientProps.name,
         email: clientProps.email,
-        address: clientProps.address,
+        document: clientProps.document,
+        address: {
+          city: clientProps.city,
+          state: clientProps.state,
+          street: clientProps.street,
+          complement: clientProps.complement,
+          number: clientProps.number,
+          zipCode: clientProps.zipCode,
+        },
         createdAt: expect.any(Date),
         updatedAt: expect.any(Date),
       })

@@ -7,6 +7,7 @@ import {
   OutputPlaceOrderDto,
 } from '@checkout/usecase/place-order/place-order.usecase.dto'
 import { ClientAdmFacadeInterface } from '@client-adm/facade/client-adm.facade.interface'
+import { Address } from '@invoice/domain/value-object/address'
 import { InvoiceFacadeInterface } from '@invoice/facade/facade.interface'
 import { PaymentFacadeInterface } from '@payment/facade/facade.interface'
 import { ProductAdmFacadeInterface } from '@product-adm/facade/product-adm.facade.interface'
@@ -37,8 +38,15 @@ export class PlaceOrderUsecase implements UseCaseInterface {
     const client = new Client({
       id: new Id(foundClient.id),
       name: foundClient.name,
-      email: foundClient.email,
-      address: foundClient.address,
+      document: foundClient.document,
+      address: new Address({
+        street: foundClient.address.street,
+        number: foundClient.address.number,
+        complement: foundClient.address.complement,
+        city: foundClient.address.city,
+        state: foundClient.address.state,
+        zipCode: foundClient.address.zipCode,
+      }),
     })
 
     const order = new Order({
@@ -101,7 +109,13 @@ export class PlaceOrderUsecase implements UseCaseInterface {
   private async generateInvoice(client: Client, products: Product[]) {
     return this.invoiceFacade.generate({
       name: client.name,
-      address: client.address,
+      document: client.document,
+      city: client.address.city,
+      state: client.address.state,
+      street: client.address.street,
+      number: client.address.number,
+      zipCode: client.address.zipCode,
+      complement: client.address.complement,
       items: products.map(({ id, name, salesPrice }) => ({
         id: id.value,
         name,
