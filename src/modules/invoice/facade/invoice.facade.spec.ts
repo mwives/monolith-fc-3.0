@@ -10,13 +10,14 @@ describe('InvoiceFacade', () => {
 
   const input = {
     name: 'any_name',
-    document: 'any_document',
-    city: 'any_city',
-    complement: 'any_complement',
-    number: 'any_number',
-    state: 'any_state',
-    street: 'any_street',
-    zipCode: 'any_zipCode',
+    address: 'any_address',
+    // document: 'any_document',
+    // city: 'any_city',
+    // complement: 'any_complement',
+    // number: 'any_number',
+    // state: 'any_state',
+    // street: 'any_street',
+    // zipCode: 'any_zipCode',
     items: [
       {
         id: 'any_id',
@@ -44,18 +45,19 @@ describe('InvoiceFacade', () => {
 
   describe('generateInvoice', () => {
     it('should generate an invoice', async () => {
-      const invoice = await facade.generateInvoice(input)
+      const invoice = await facade.generate(input)
 
       expect(invoice).toMatchObject({
         id: expect.any(String),
         name: input.name,
-        document: input.document,
-        street: input.street,
-        number: input.number,
-        complement: input.complement,
-        city: input.city,
-        state: input.state,
-        zipCode: input.zipCode,
+        address: input.address,
+        // document: input.document,
+        // street: input.street,
+        // number: input.number,
+        // complement: input.complement,
+        // city: input.city,
+        // state: input.state,
+        // zipCode: input.zipCode,
         items: expect.arrayContaining([
           {
             id: expect.any(String),
@@ -69,9 +71,9 @@ describe('InvoiceFacade', () => {
 
   describe('findInvoiceById', () => {
     it('should find an invoice by id', async () => {
-      const createdInvoice = await facade.generateInvoice(input)
+      const createdInvoice = await facade.generate(input)
 
-      const foundInvoice = await facade.findInvoiceById({
+      const foundInvoice = await facade.findById({
         id: createdInvoice.id,
       })
 

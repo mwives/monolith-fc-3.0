@@ -14,13 +14,13 @@ export class InvoiceFacade implements InvoiceFacadeInterface {
     private readonly findInvoiceByIdUsecase: FindInvoiceByIdUsecase
   ) {}
 
-  async findInvoiceById(
+  async findById(
     input: InputFindInvoiceUseCaseDTO
   ): Promise<OutputFindInvoiceUseCaseDTO> {
     return this.findInvoiceByIdUsecase.execute(input)
   }
 
-  async generateInvoice(
+  async generate(
     input: InputGenerateInvoiceUseCaseDto
   ): Promise<OutputGenerateInvoiceUseCaseDto> {
     return this.generateInvoiceUseCase.execute(input)
