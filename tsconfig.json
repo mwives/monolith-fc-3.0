@@ -13,6 +13,7 @@
     "skipLibCheck": true,
     "paths": {
       "@shared/*": ["./src/modules/@shared/*"],
+      "@checkout/*": ["./src/modules/checkout/*"],
       "@client-adm/*": ["./src/modules/client-adm/*"],
       "@invoice/*": ["./src/modules/invoice/*"],
       "@payment/*": ["./src/modules/payment/*"],
