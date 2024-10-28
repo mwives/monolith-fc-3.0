@@ -1,12 +1,13 @@
 export type InputGenerateInvoiceUseCaseDto = {
   name: string
-  document: string
-  street: string
-  number: string
-  complement: string
-  city: string
-  state: string
-  zipCode: string
+  address: string
+  // document: string
+  // street: string
+  // number: string
+  // complement: string
+  // city: string
+  // state: string
+  // zipCode: string
   items: Array<{
     id: string
     name: string
@@ -17,13 +18,14 @@ export type InputGenerateInvoiceUseCaseDto = {
 export type OutputGenerateInvoiceUseCaseDto = {
   id: string
   name: string
-  document: string
-  street: string
-  number: string
-  complement: string
-  city: string
-  state: string
-  zipCode: string
+  address: string
+  // document: string
+  // street: string
+  // number: string
+  // complement: string
+  // city: string
+  // state: string
+  // zipCode: string
   items: Array<{
     id: string
     name: string
