@@ -15,7 +15,7 @@ export type OutputCheckStockFacadeDto = {
   stock: number
 }
 
-export interface IProductAdmFacade {
+export interface ProductAdmFacadeInterface {
   addProduct(input: InputAddProductFacadeDto): Promise<void>
   checkStock(
     input: InputCheckStockFacadeDto

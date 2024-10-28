@@ -1,7 +1,7 @@
 import {
   InputAddProductFacadeDto,
   InputCheckStockFacadeDto,
-  IProductAdmFacade,
+  ProductAdmFacadeInterface,
   OutputCheckStockFacadeDto,
 } from '@product-adm/facade/product-adm.facade.interface'
 import { UseCaseInterface } from '@shared/usecase/usecase.interface'
@@ -11,7 +11,7 @@ export interface UseCasesProps {
   checkStockUseCase: UseCaseInterface
 }
 
-export class ProductAdmFacade implements IProductAdmFacade {
+export class ProductAdmFacade implements ProductAdmFacadeInterface {
   private addUseCase: UseCaseInterface
   private checkStockUseCase: UseCaseInterface
 
