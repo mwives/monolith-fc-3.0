@@ -15,7 +15,7 @@ export type OutputFindByIdStoreCatalogFacadeDto = {
   id: string
   name: string
   description: string
-  price: number
+  salesPrice: number
 }
 
 export interface StoreCatalogFacadeInterface {
