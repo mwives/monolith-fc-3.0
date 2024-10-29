@@ -65,7 +65,7 @@ export class PlaceOrderUsecase implements UseCaseInterface {
         ? await this.generateInvoice(client, products)
         : null
 
-    this.checkoutRepository.createOrder(order)
+    await this.checkoutRepository.createOrder(order)
 
     return {
       id: order.id.value,
