@@ -2,7 +2,7 @@ import { Column, Model, PrimaryKey, Table } from 'sequelize-typescript'
 
 @Table({
   tableName: 'products',
-  timestamps: false,
+  timestamps: true,
 })
 export class ProductModel extends Model {
   @PrimaryKey

@@ -9,7 +9,7 @@ import {
 
 @Table({
   tableName: 'clients',
-  timestamps: false,
+  timestamps: true,
 })
 export class ClientModel extends Model {
   @PrimaryKey
