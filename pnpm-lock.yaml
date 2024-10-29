@@ -17,9 +17,6 @@ importers:
       jstoxml:
         specifier: ^3.2.3
         version: 3.2.10
-      nodemon:
-        specifier: ^2.0.15
-        version: 2.0.22
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.14
@@ -58,7 +55,7 @@ importers:
         specifier: ^2.0.2
         version: 2.0.4
       '@types/supertest':
-        specifier: ^2.0.12
+        specifier: ^2.0.16
         version: 2.0.16
       '@types/uuid':
         specifier: ^8.3.4
@@ -66,11 +63,14 @@ importers:
       jest:
         specifier: ^27.5.1
         version: 27.5.1(ts-node@10.9.2(@swc/core@1.7.26)(@types/node@22.7.5)(typescript@4.9.5))
+      nodemon:
+        specifier: ^3.1.7
+        version: 3.1.7
       sequelize-cli:
         specifier: ^6.6.2
         version: 6.6.2
       supertest:
-        specifier: ^6.2.2
+        specifier: ^6.3.4
         version: 6.3.4
       ts-node:
         specifier: ^10.6.0
@@ -1012,14 +1012,6 @@ packages:
 
   debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
-
-  debug@3.2.7:
-    resolution: {integrity: sha512-CFjzYYAi4ThfiQvizrFQevTTXHtnCqWfe7x1AhgEscTz6ZbLbfoLRLPugTQyBth6f8ZERVUSyWHFD/7Wu4t1XQ==}
     peerDependencies:
       supports-color: '*'
     peerDependenciesMeta:
@@ -2031,9 +2023,9 @@ packages:
   node-releases@2.0.18:
     resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
 
-  nodemon@2.0.22:
-    resolution: {integrity: sha512-B8YqaKMmyuCO7BowF1Z1/mkPqLk6cs/l63Ojtd6otKjMx47Dq1utxfRxcavH1I7VSaL8n5BUaoutadnsX3AAVQ==}
-    engines: {node: '>=8.10.0'}
+  nodemon@3.1.7:
+    resolution: {integrity: sha512-hLj7fuMow6f0lbB0cD14Lz2xNjwsyruH251Pk4t/yIitCFJbmY1myuLlHm/q06aST4jg6EgAh74PIBBrRqpVAQ==}
+    engines: {node: '>=10'}
     hasBin: true
 
   nopt@5.0.0:
@@ -2343,16 +2335,8 @@ packages:
     resolution: {integrity: sha512-LJWA9kSvMolR51oDE6PN3kALBNaUdkxzAGcexw8gjMA8xr5zUqK0JiR3CgARSqanYF3Z1YHvsErb1KDgh+v7Rg==}
     engines: {node: '>=12'}
 
-  semver@5.7.2:
-    resolution: {integrity: sha512-cBznnQ9KjJqU67B52RMC65CMarK2600WFnbkcaiwWq3xy/5haFJlshgnpjovMVJ+Hff49d8GEn0b87C5pDQ10g==}
-    hasBin: true
-
   semver@6.3.1:
     resolution: {integrity: sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==}
-    hasBin: true
-
-  semver@7.0.0:
-    resolution: {integrity: sha512-+GB6zVA9LWh6zovYQLALHwv5rb2PHGlJi3lfiqIHxR0uuwCgefcOJc59v9fv1w8GbStwxuuqqAjI9NMAOOgq1A==}
     hasBin: true
 
   semver@7.6.3:
@@ -2462,9 +2446,9 @@ packages:
   simple-get@4.0.1:
     resolution: {integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==}
 
-  simple-update-notifier@1.1.0:
-    resolution: {integrity: sha512-VpsrsJSUcJEseSbMHkrsrAVSdvVS5I96Qo1QAQ4FxQ9wXFcB+pjj7FB7/us9+GcgfW4ziHtYMc1J0PLczb55mg==}
-    engines: {node: '>=8.10.0'}
+  simple-update-notifier@2.0.0:
+    resolution: {integrity: sha512-a2B9Y0KlNXl9u/vsW6sTIu9vGEpfKu2wRV6l1H3XEas/0gUIzGzBoP/IouTcUQbm9JWZLH3COxyn03TYlFax6w==}
+    engines: {node: '>=10'}
 
   sisteransi@1.0.5:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
@@ -2910,7 +2894,7 @@ snapshots:
       '@babel/traverse': 7.25.7
       '@babel/types': 7.25.7
       convert-source-map: 2.0.0
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -3077,7 +3061,7 @@ snapshots:
       '@babel/parser': 7.25.7
       '@babel/template': 7.25.7
       '@babel/types': 7.25.7
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -3618,7 +3602,7 @@ snapshots:
 
   agent-base@6.0.2:
     dependencies:
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4023,15 +4007,11 @@ snapshots:
     dependencies:
       ms: 2.0.0
 
-  debug@3.2.7(supports-color@5.5.0):
+  debug@4.3.7(supports-color@5.5.0):
     dependencies:
       ms: 2.1.3
     optionalDependencies:
       supports-color: 5.5.0
-
-  debug@4.3.7:
-    dependencies:
-      ms: 2.1.3
 
   decimal.js@10.4.3: {}
 
@@ -4519,7 +4499,7 @@ snapshots:
     dependencies:
       '@tootallnate/once': 1.1.2
       agent-base: 6.0.2
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4531,7 +4511,7 @@ snapshots:
   https-proxy-agent@5.0.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -4646,7 +4626,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -5318,15 +5298,15 @@ snapshots:
 
   node-releases@2.0.18: {}
 
-  nodemon@2.0.22:
+  nodemon@3.1.7:
     dependencies:
       chokidar: 3.6.0
-      debug: 3.2.7(supports-color@5.5.0)
+      debug: 4.3.7(supports-color@5.5.0)
       ignore-by-default: 1.0.1
       minimatch: 3.1.2
       pstree.remy: 1.1.8
-      semver: 5.7.2
-      simple-update-notifier: 1.1.0
+      semver: 7.6.3
+      simple-update-notifier: 2.0.0
       supports-color: 5.5.0
       touch: 3.1.1
       undefsafe: 2.0.5
@@ -5601,11 +5581,7 @@ snapshots:
     dependencies:
       semver: 7.6.3
 
-  semver@5.7.2: {}
-
   semver@6.3.1: {}
-
-  semver@7.0.0: {}
 
   semver@7.6.3: {}
 
@@ -5651,7 +5627,7 @@ snapshots:
     dependencies:
       '@types/debug': 4.1.12
       '@types/validator': 13.12.2
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       dottie: 2.0.6
       inflection: 1.13.4
       lodash: 4.17.21
@@ -5724,9 +5700,9 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
 
-  simple-update-notifier@1.1.0:
+  simple-update-notifier@2.0.0:
     dependencies:
-      semver: 7.0.0
+      semver: 7.6.3
 
   sisteransi@1.0.5: {}
 
@@ -5738,7 +5714,7 @@ snapshots:
   socks-proxy-agent@6.2.1:
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       socks: 2.8.3
     transitivePeerDependencies:
       - supports-color
@@ -5845,7 +5821,7 @@ snapshots:
     dependencies:
       component-emitter: 1.3.1
       cookiejar: 2.1.4
-      debug: 4.3.7
+      debug: 4.3.7(supports-color@5.5.0)
       fast-safe-stringify: 2.1.1
       form-data: 4.0.0
       formidable: 2.1.2
