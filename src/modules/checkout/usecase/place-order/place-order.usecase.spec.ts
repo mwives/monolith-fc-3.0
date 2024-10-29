@@ -1,4 +1,4 @@
-import { Product } from '@checkout/domain/product.entity'
+import { Product } from '@checkout/domain/entity/product.entity'
 import { Id } from '@shared/domain/value-object/id.value-object'
 import { PlaceOrderUsecase } from './place-order.usecase'
 import { InputPlaceOrderDto } from './place-order.usecase.dto'

@@ -1,13 +1,13 @@
-import { Client } from '@checkout/domain/client.entity'
-import { Order } from '@checkout/domain/order.entity'
-import { Product } from '@checkout/domain/product.entity'
+import { Client } from '@checkout/domain/entity/client.entity'
+import { Order } from '@checkout/domain/entity/order.entity'
+import { Product } from '@checkout/domain/entity/product.entity'
+import { Address } from '@checkout/domain/value-object/address'
 import { CheckoutGateway } from '@checkout/gateway/checkout.gateway'
 import {
   InputPlaceOrderDto,
   OutputPlaceOrderDto,
 } from '@checkout/usecase/place-order/place-order.usecase.dto'
 import { ClientAdmFacadeInterface } from '@client-adm/facade/client-adm.facade.interface'
-import { Address } from '@invoice/domain/value-object/address'
 import { InvoiceFacadeInterface } from '@invoice/facade/facade.interface'
 import { PaymentFacadeInterface } from '@payment/facade/facade.interface'
 import { ProductAdmFacadeInterface } from '@product-adm/facade/product-adm.facade.interface'

@@ -1,4 +1,4 @@
-import { Order } from '@checkout/domain/order.entity'
+import { Order } from '@checkout/domain/entity/order.entity'
 
 export interface CheckoutGateway {
   createOrder(order: Order): Promise<void>
