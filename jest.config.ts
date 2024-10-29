@@ -13,6 +13,7 @@ export default {
     '^@shared/(.*)$': '<rootDir>/src/modules/@shared/$1',
     '^@checkout/(.*)$': '<rootDir>/src/modules/checkout/$1',
     '^@client-adm/(.*)$': '<rootDir>/src/modules/client-adm/$1',
+    '^@infra/(.*)$': '<rootDir>/src/infra/$1',
     '^@invoice/(.*)$': '<rootDir>/src/modules/invoice/$1',
     '^@payment/(.*)$': '<rootDir>/src/modules/payment/$1',
     '^@product-adm/(.*)$': '<rootDir>/src/modules/product-adm/$1',
