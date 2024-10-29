@@ -43,63 +43,52 @@ export class InvoiceRepository implements InvoiceGateway {
   }
 
   async create(invoice: Invoice): Promise<Invoice> {
-    const transaction = await InvoiceModel.sequelize.transaction()
-
-    try {
-      const invoiceData = {
-        id: invoice.id.value,
-        name: invoice.name,
-        document: invoice.document,
-        street: invoice.address.street,
-        number: invoice.address.number,
-        complement: invoice.address.complement,
-        city: invoice.address.city,
-        state: invoice.address.state,
-        zipCode: invoice.address.zipCode,
-      }
-
-      const createdInvoice = await InvoiceModel.create(invoiceData, {
-        transaction,
-      })
-
-      const invoiceItems = invoice.items.map((item) => ({
-        id: item.id.value,
-        invoiceId: invoice.id.value,
-        name: item.name,
-        price: item.price,
-      }))
-
-      await InvoiceItemModel.bulkCreate(invoiceItems, { transaction })
-
-      await transaction.commit()
-
-      return new Invoice({
-        id: new Id(createdInvoice.id),
-        name: createdInvoice.name,
-        document: createdInvoice.document,
-        address: new Address({
-          street: createdInvoice.street,
-          number: createdInvoice.number,
-          complement: createdInvoice.complement,
-          city: createdInvoice.city,
-          state: createdInvoice.state,
-          zipCode: createdInvoice.zipCode,
-        }),
-        items: invoiceItems.map(
-          (item) =>
-            new InvoiceItem({
-              id: new Id(item.id),
-              invoiceId: new Id(item.invoiceId),
-              name: item.name,
-              price: item.price,
-            })
-        ),
-        createdAt: createdInvoice.createdAt,
-        updatedAt: createdInvoice.updatedAt,
-      })
-    } catch (error) {
-      await transaction.rollback()
-      throw error
+    const invoiceData = {
+      id: invoice.id.value,
+      name: invoice.name,
+      document: invoice.document,
+      street: invoice.address.street,
+      number: invoice.address.number,
+      complement: invoice.address.complement,
+      city: invoice.address.city,
+      state: invoice.address.state,
+      zipCode: invoice.address.zipCode,
     }
+
+    const createdInvoice = await InvoiceModel.create(invoiceData)
+
+    const invoiceItems = invoice.items.map((item) => ({
+      id: item.id.value,
+      invoiceId: invoice.id.value,
+      name: item.name,
+      price: item.price,
+    }))
+
+    await InvoiceItemModel.bulkCreate(invoiceItems)
+
+    return new Invoice({
+      id: new Id(createdInvoice.id),
+      name: createdInvoice.name,
+      document: createdInvoice.document,
+      address: new Address({
+        street: createdInvoice.street,
+        number: createdInvoice.number,
+        complement: createdInvoice.complement,
+        city: createdInvoice.city,
+        state: createdInvoice.state,
+        zipCode: createdInvoice.zipCode,
+      }),
+      items: invoiceItems.map(
+        (item) =>
+          new InvoiceItem({
+            id: new Id(item.id),
+            invoiceId: new Id(item.invoiceId),
+            name: item.name,
+            price: item.price,
+          })
+      ),
+      createdAt: createdInvoice.createdAt,
+      updatedAt: createdInvoice.updatedAt,
+    })
   }
 }
