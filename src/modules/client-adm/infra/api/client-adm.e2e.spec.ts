@@ -20,6 +20,10 @@ describe('clientAdmRouter E2E', () => {
     await sequelize.sync()
   })
 
+  afterEach(async () => {
+    await sequelize.close()
+  })
+
   describe('POST /client', () => {
     const createClient = async (data: InputAddClientDto) =>
       request(app).post('/client').send(data)
@@ -41,7 +45,7 @@ describe('clientAdmRouter E2E', () => {
 
       expect(response.status).toBe(201)
 
-      const createdClient = ClientModel.findOne({
+      const createdClient = await ClientModel.findOne({
         where: {
           name: 'any_name',
           email: 'any_email',
